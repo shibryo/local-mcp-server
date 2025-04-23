@@ -16,6 +16,7 @@ func main() {
 
 	// Add tools
 	mymcp.AddHelloTool(s)
+	mymcp.AddNewIdeaForMCPTool(s)
 
 	// Start the stdio server
 	if err := server.ServeStdio(s); err != nil {

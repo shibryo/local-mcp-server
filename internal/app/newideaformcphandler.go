@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"strings"
 
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/shibryo/local-mcp-server/internal/infra"
@@ -20,9 +21,9 @@ func NewIdeaForMCPHandler(github *infra.GitHub) func(ctx context.Context, reques
 		if !ok {
 			return nil, errors.New("title must be a string")
 		}
-		description, ok := request.Params.Arguments["description(Why,What,e.g.)"].(string)
+		description, ok := request.Params.Arguments["description"].(string)
 		if !ok {
-			return nil, errors.New("description(Why,What,e.g.) must be a string")
+			return nil, errors.New("description must be a string")
 		}
 		tags, ok := request.Params.Arguments["tags"].(string)
 		if !ok {
@@ -30,12 +31,14 @@ func NewIdeaForMCPHandler(github *infra.GitHub) func(ctx context.Context, reques
 		}
 		tagsArray := []string{}
 		// Split tags by comma
-		for _, tag := range tags.split(",") {
-			tagsArray = append(tagsArray, tag)
+		for _, tag := range strings.Split(tags, ",") {
+			if trimmed := strings.TrimSpace(tag); trimmed != "" {
+				tagsArray = append(tagsArray, trimmed)
+			}
 		}
 
 		// Create issue on GitHub
-		err := github.CreateIssue(GitHub_Owner, GitHub_Repo, title, description, tags)
+		err := github.CreateIssue(GitHub_Owner, GitHub_Repo, title, description, &tagsArray)
 		if err != nil {
 			return nil, fmt.Errorf("failed to create issue: %w", err)
 		}

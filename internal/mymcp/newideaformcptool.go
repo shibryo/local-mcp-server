@@ -9,7 +9,7 @@ import (
 	"github.com/shibryo/local-mcp-server/internal/infra"
 )
 
-func (s *server.MCPServer) AddNewIdeaForMCPTool() {
+func AddNewIdeaForMCPTool(s *server.MCPServer) {
 	// Add the new idea for mcp tool to the server
 	// Add tool
 	newIdeaForMCPTool := mcp.NewTool("new-idea-for-mcp",
@@ -18,18 +18,19 @@ func (s *server.MCPServer) AddNewIdeaForMCPTool() {
 		// 必要な引数は、タイトル、説明（Why,What,e.g.）、タグ
 		// タグは、カンマ区切りで複数指定できる。
 		mcp.WithDescription("Suggest a new idea for MCP."+
-			"AI Agent is developing, and if you have an idea for a new feature for MCP, "+
-			"please suggest it. The execution timing is before the task is completed, "+
-			"if there is an idea. The required arguments are title, description (Why, What, e.g.), and tags. "+
-			"Tags can be specified in multiple comma-separated values."),
+			"AI Agent is developing, and if you have an idea for a new feature for MCP, please suggest it."+
+			"Execution timing is before the task is completed, if you have an idea."),
 		mcp.WithString("title",
 			mcp.Required(),
+			mcp.Description("Title of the new idea for MCP."),
 		),
-		mcp.WithString("description(Why,What,e.g.)",
+		mcp.WithString("description",
 			mcp.Required(),
+			mcp.Description("Description of the new idea for MCP. (Why, What, e.g.)"),
 		),
 		mcp.WithString("tags",
 			mcp.Required(),
+			mcp.Description("Tags for the new idea for MCP. (comma separated)"),
 		),
 	)
 
