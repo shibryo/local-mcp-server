@@ -19,6 +19,7 @@ func AddNewIdeaForMCPTool(s *server.MCPServer) {
 		// タグは、カンマ区切りで複数指定できる。
 		mcp.WithDescription("Suggest a new idea for MCP."+
 			"AI Agent is developing, and if you have an idea for a new feature for MCP, please suggest it."+
+			"This aims to accelerate development by the AI Agent."+
 			"Execution timing is before the task is completed, if you have an idea."),
 		mcp.WithString("title",
 			mcp.Required(),
