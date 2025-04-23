@@ -1,5 +1,7 @@
 # local-mcp-server
 
+自分用の MCP サーバ
+
 ## get started
 
 ### Cline
